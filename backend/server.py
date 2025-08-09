@@ -92,17 +92,29 @@ async def get_chat_session(session_id: str):
         raise HTTPException(status_code=404, detail="Session not found")
     return ChatSession(**session)
 
-@api_router.post("/chat/sessions/{session_id}/messages")
-async def add_message_to_session(session_id: str, message: ChatMessage):
-    """Add a message to a chat session"""
-    await db.chat_sessions.update_one(
+@api_router.delete("/chat/sessions/{session_id}")
+async def delete_chat_session(session_id: str):
+    """Delete a specific chat session"""
+    result = await db.chat_sessions.delete_one({"id": session_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return {"success": True, "message": "Session deleted successfully"}
+
+@api_router.put("/chat/sessions/{session_id}/title")
+async def update_chat_session_title(session_id: str, title: str):
+    """Update the title of a chat session"""
+    result = await db.chat_sessions.update_one(
         {"id": session_id},
         {
-            "$push": {"messages": message.dict()},
-            "$set": {"updated_at": datetime.utcnow()}
+            "$set": {
+                "title": title,
+                "updated_at": datetime.utcnow()
+            }
         }
     )
-    return {"success": True}
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return {"success": True, "message": "Title updated successfully"}
 
 # Include the router in the main app
 app.include_router(api_router)
