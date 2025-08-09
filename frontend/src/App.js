@@ -597,8 +597,8 @@ function App() {
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center text-gray-400">
               <Gavel className="w-16 h-16 mx-auto mb-4 opacity-50" />
-              <h3 className="text-xl font-medium mb-2">Welcome to MUN Assistant</h3>
-              <p className="text-sm">Select a task from the sidebar to begin your MUN preparation</p>
+              <h3 className="text-xl font-medium mb-2">Welcome to Vistatia</h3>
+              <p className="text-sm">Select a diplomatic tool from the sidebar to begin your analysis</p>
             </div>
           </div>
         )}
