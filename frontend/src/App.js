@@ -541,6 +541,24 @@ function App() {
 
               {/* Input Area */}
               <div className="border-t border-slate-700 p-4">
+                {/* Amendment Input for amendments task */}
+                {selectedTask.id === 'amendments' && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Amendment Text (Optional)
+                    </label>
+                    <div className="bg-slate-700/50 rounded-lg p-3">
+                      <textarea
+                        value={amendmentText}
+                        onChange={(e) => setAmendmentText(e.target.value)}
+                        placeholder="Paste the original text you want to amend here..."
+                        className="w-full bg-transparent text-white placeholder-gray-400 resize-none outline-none"
+                        rows="3"
+                      />
+                    </div>
+                  </div>
+                )}
+                
                 <div className="flex gap-3 items-end">
                   <div className="flex-1 bg-slate-700/50 rounded-2xl p-3">
                     <textarea
