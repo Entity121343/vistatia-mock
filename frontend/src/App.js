@@ -338,16 +338,7 @@ function App() {
     );
   }
 
-  // Temporary bypass for testing - remove in production
-  const testUser = {
-    uid: 'test-user-123',
-    displayName: 'Test User',
-    email: 'test@example.com'
-  };
-  
   if (!user) {
-    // For testing purposes, auto-set a test user
-    setUser(testUser);
     return <LoginPage onLogin={setUser} />;
   }
 
