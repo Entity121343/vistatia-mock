@@ -22,7 +22,9 @@ import {
   ArrowRight, 
   Search, 
   Mic, 
-  Users 
+  Users,
+  Trash2,
+  MoreVertical
 } from 'lucide-react';
 import './App.css';
 
