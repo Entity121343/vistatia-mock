@@ -369,6 +369,12 @@ function App() {
       try {
         await axios.post(`${API}/chat/sessions/${currentSession.id}/messages`, userMessage);
         await axios.post(`${API}/chat/sessions/${currentSession.id}/messages`, assistantMessage);
+        
+        // Auto-rename session if it's still "New Chat"
+        if (currentSession.title === "New Chat") {
+          const newTitle = generateChatTitle(inputMessage.trim(), selectedTask.id);
+          await updateSessionTitle(currentSession.id, newTitle);
+        }
       } catch (dbError) {
         console.log('Chat history save failed:', dbError);
         // Continue even if local storage fails
