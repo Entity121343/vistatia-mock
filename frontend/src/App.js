@@ -221,6 +221,10 @@ function App() {
   useEffect(() => {
     if (user && selectedTask) {
       loadChatSessions(selectedTask.id);
+      // Reset amendment text when switching tasks
+      if (selectedTask.id !== 'amendments') {
+        setAmendmentText('');
+      }
     }
   }, [user, selectedTask]);
 
