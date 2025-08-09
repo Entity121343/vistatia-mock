@@ -282,8 +282,8 @@ function App() {
       };
 
       // Add amendmentPrompt for amendments task
-      if (selectedTask.id === 'amendments' && currentSession.amendmentText) {
-        requestData.amendmentPrompt = currentSession.amendmentText;
+      if (selectedTask.id === 'amendments' && amendmentText) {
+        requestData.amendmentPrompt = amendmentText;
       }
 
       // Send to your real backend
