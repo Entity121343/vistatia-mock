@@ -280,7 +280,7 @@ function App() {
     try {
       // Prepare request data for your backend
       const requestData = {
-        userID: user.uid,
+        userId: user.uid,
         task: selectedTask.id,
         prompt: inputMessage.trim()
       };
@@ -296,7 +296,7 @@ function App() {
       const assistantMessage = {
         id: Date.now().toString() + '_ai',
         type: 'assistant',
-        content: response.data.response || response.data.message || response.data,
+        content: response.data.result || response.data.response || response.data.message || response.data,
         timestamp: new Date().toISOString()
       };
 
