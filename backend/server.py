@@ -92,6 +92,18 @@ async def get_chat_session(session_id: str):
         raise HTTPException(status_code=404, detail="Session not found")
     return ChatSession(**session)
 
+@api_router.post("/chat/sessions/{session_id}/messages")
+async def add_message_to_session(session_id: str, message: ChatMessage):
+    """Add a message to a chat session"""
+    await db.chat_sessions.update_one(
+        {"id": session_id},
+        {
+            "$push": {"messages": message.dict()},
+            "$set": {"updated_at": datetime.utcnow()}
+        }
+    )
+    return {"success": True}
+
 @api_router.delete("/chat/sessions/{session_id}")
 async def delete_chat_session(session_id: str):
     """Delete a specific chat session"""
