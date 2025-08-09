@@ -45,7 +45,7 @@ const googleProvider = new GoogleAuthProvider();
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// MUN Tasks with icons and descriptions
+// MUN Tasks with icons and descriptions - updated to match backend
 const MUN_TASKS = [
   { 
     id: 'research', 
@@ -62,7 +62,7 @@ const MUN_TASKS = [
     color: 'bg-green-500'
   },
   { 
-    id: 'situation assessment', 
+    id: 'assessment', 
     name: 'Situation Assessment', 
     icon: AlertTriangle, 
     description: 'Analyze current global situations',
@@ -90,7 +90,7 @@ const MUN_TASKS = [
     color: 'bg-cyan-500'
   },
   { 
-    id: 'poi/poo/r2r', 
+    id: 'poi/poo', 
     name: 'POI/POO/R2R', 
     icon: MessageSquare, 
     description: 'Points of Information, Order, and Right to Reply',
