@@ -267,6 +267,65 @@ function App() {
     setMessages(session.messages || []);
   };
 
+  const deleteSession = async (sessionId) => {
+    try {
+      await axios.delete(`${API}/chat/sessions/${sessionId}`);
+      
+      // Reload sessions for current task
+      if (selectedTask) {
+        await loadChatSessions(selectedTask.id);
+      }
+      
+      // If deleted session was current, clear it
+      if (currentSession?.id === sessionId) {
+        setCurrentSession(null);
+        setMessages([]);
+      }
+      
+      setShowDeleteConfirm(null);
+    } catch (error) {
+      console.error('Failed to delete session:', error);
+      alert('Failed to delete chat session. Please try again.');
+    }
+  };
+
+  const generateChatTitle = (prompt, task) => {
+    // Generate a concise title based on the prompt and task
+    const words = prompt.split(' ').slice(0, 6); // Take first 6 words
+    let title = words.join(' ');
+    
+    // Add task context if title is too generic
+    if (title.length < 15) {
+      const taskName = selectedTask?.name || task;
+      title = `${taskName}: ${title}`;
+    }
+    
+    // Truncate if too long
+    if (title.length > 50) {
+      title = title.substring(0, 47) + '...';
+    }
+    
+    return title;
+  };
+
+  const updateSessionTitle = async (sessionId, newTitle) => {
+    try {
+      await axios.put(`${API}/chat/sessions/${sessionId}/title?title=${encodeURIComponent(newTitle)}`);
+      
+      // Reload sessions to show updated title
+      if (selectedTask) {
+        await loadChatSessions(selectedTask.id);
+      }
+      
+      // Update current session if it's the one we just renamed
+      if (currentSession?.id === sessionId) {
+        setCurrentSession(prev => ({ ...prev, title: newTitle }));
+      }
+    } catch (error) {
+      console.error('Failed to update session title:', error);
+    }
+  };
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || !selectedTask || !currentSession) return;
 
