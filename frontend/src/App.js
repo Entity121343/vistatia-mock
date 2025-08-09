@@ -441,6 +441,32 @@ function App() {
 
   return (
     <div className="h-screen bg-slate-900 flex">
+      {/* Delete Confirmation Dialog */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6 max-w-md mx-4">
+            <h3 className="text-white font-medium mb-2">Delete Chat Session</h3>
+            <p className="text-gray-400 text-sm mb-4">
+              Are you sure you want to delete this chat session? This action cannot be undone.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowDeleteConfirm(null)}
+                className="px-4 py-2 text-gray-400 hover:text-gray-300 rounded-lg border border-slate-600 hover:border-slate-500 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => deleteSession(showDeleteConfirm)}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Sidebar */}
       <div className={`${sidebarOpen ? 'w-80' : 'w-0'} transition-all duration-300 bg-slate-800/50 backdrop-blur-sm border-r border-slate-700 flex flex-col overflow-hidden`}>
         <div className="p-4 border-b border-slate-700">
