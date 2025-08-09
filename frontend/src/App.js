@@ -486,9 +486,11 @@ function App() {
                         : 'bg-slate-700/50 text-gray-100 mr-12'
                     }`}>
                       {message.type === 'assistant' ? (
-                        <ReactMarkdown className="prose prose-invert max-w-none">
-                          {message.content}
-                        </ReactMarkdown>
+                        <div className="prose prose-invert max-w-none">
+                          <ReactMarkdown>
+                            {message.content}
+                          </ReactMarkdown>
+                        </div>
                       ) : (
                         <p className="whitespace-pre-wrap">{message.content}</p>
                       )}
