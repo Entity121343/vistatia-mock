@@ -53,7 +53,7 @@ class ChatMessage(BaseModel):
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "MUN Assistant API - Local Session Management"}
+    return {"message": "Vistatia - Diplomatic Intelligence Platform API"}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
