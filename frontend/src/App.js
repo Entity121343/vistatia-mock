@@ -273,32 +273,55 @@ function App() {
     setIsTyping(true);
 
     try {
-      // Send to backend
-      const response = await axios.post(`${API}/generate`, {
-        userId: user.uid,
+      // Prepare request data for your backend
+      const requestData = {
+        userID: user.uid,
         task: selectedTask.id,
         prompt: inputMessage.trim()
-      });
+      };
+
+      // Add amendmentPrompt for amendments task
+      if (selectedTask.id === 'amendments' && currentSession.amendmentText) {
+        requestData.amendmentPrompt = currentSession.amendmentText;
+      }
+
+      // Send to your real backend
+      const response = await axios.post('https://vistatia-backend.onrender.com/generate', requestData);
 
       const assistantMessage = {
         id: Date.now().toString() + '_ai',
         type: 'assistant',
-        content: response.data.response,
+        content: response.data.response || response.data.message || response.data,
         timestamp: new Date().toISOString()
       };
 
       setMessages(prev => [...prev, assistantMessage]);
 
-      // Update session in database
-      await axios.post(`${API}/chat/sessions/${currentSession.id}/messages`, userMessage);
-      await axios.post(`${API}/chat/sessions/${currentSession.id}/messages`, assistantMessage);
+      // Update session in local database (optional - for chat history)
+      try {
+        await axios.post(`${API}/chat/sessions/${currentSession.id}/messages`, userMessage);
+        await axios.post(`${API}/chat/sessions/${currentSession.id}/messages`, assistantMessage);
+      } catch (dbError) {
+        console.log('Chat history save failed:', dbError);
+        // Continue even if local storage fails
+      }
 
     } catch (error) {
       console.error('Failed to send message:', error);
+      let errorContent = 'Sorry, I encountered an error. Please try again.';
+      
+      if (error.response?.data?.message) {
+        errorContent = `Error: ${error.response.data.message}`;
+      } else if (error.response?.data) {
+        errorContent = `Error: ${error.response.data}`;
+      } else if (error.message) {
+        errorContent = `Connection error: ${error.message}`;
+      }
+
       const errorMessage = {
         id: Date.now().toString() + '_error',
         type: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again.',
+        content: errorContent,
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, errorMessage]);
