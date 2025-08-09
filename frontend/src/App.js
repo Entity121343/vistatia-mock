@@ -182,7 +182,7 @@ const LoginPage = ({ onLogin }) => {
         </button>
 
         <div className="mt-6 text-center text-sm text-gray-400">
-          Access all MUN tools and features with your Google account
+          Access all diplomatic tools and intelligence features with your Google account
         </div>
       </div>
     </div>
