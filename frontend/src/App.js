@@ -380,7 +380,7 @@ function App() {
               <Gavel className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h1 className="text-white font-bold text-lg">MUN Assistant</h1>
+              <h1 className="text-white font-bold text-lg">Vistatia</h1>
               <p className="text-gray-400 text-sm">Welcome, {user.displayName}</p>
             </div>
           </div>
