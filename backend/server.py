@@ -35,19 +35,6 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
-class GenerateRequest(BaseModel):
-    userId: str
-    task: str
-    prompt: str
-
-class GenerateResponse(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    userId: str
-    task: str
-    prompt: str
-    response: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
-
 class ChatSession(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     userId: str
@@ -66,7 +53,7 @@ class ChatMessage(BaseModel):
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "MUN Assistant API"}
+    return {"message": "MUN Assistant API - Local Session Management"}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -79,52 +66,6 @@ async def create_status_check(input: StatusCheckCreate):
 async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
-
-@api_router.post("/generate", response_model=GenerateResponse)
-async def generate_response(request: GenerateRequest):
-    """
-    Generate AI response for MUN tasks
-    Available tasks: amendments, situation assessment, directive, draft resolution, 
-    background guide, poi/poo/r2r, post assessment, probable outcomes, rebuttal, research, speech, strategy
-    """
-    try:
-        # Here you would integrate with your AI service
-        # For now, I'll create a mock response based on the task type
-        
-        task_responses = {
-            "amendments": f"Here's an analysis and proposed amendments for your directive:\n\n**Key Areas for Amendment:**\n1. Strengthen enforcement mechanisms\n2. Clarify jurisdictional scope\n3. Add implementation timeline\n\n**Detailed Amendments:**\n{request.prompt}",
-            "situation assessment": f"**Current Situation Analysis:**\n\nBased on your query: {request.prompt}\n\n**Key Factors:**\n1. Political dynamics\n2. Economic implications\n3. Security concerns\n\n**Recommendations:** Immediate diplomatic intervention required.",
-            "directive": f"**DIRECTIVE**\n\n**Subject:** {request.prompt}\n\n**Operative Clauses:**\n1. CALLS UPON all member states to...\n2. REQUESTS the Secretary-General to...\n3. DECIDES to establish...",
-            "draft resolution": f"**DRAFT RESOLUTION**\n\n**The [Committee Name],**\n\n**Recalling** previous resolutions on this matter,\n**Noting with concern** the current situation regarding {request.prompt},\n\n**Operative Clauses:**\n1. **Affirms** the commitment to...\n2. **Calls upon** all member states to...",
-            "background guide": f"**BACKGROUND GUIDE**\n\n**Topic:** {request.prompt}\n\n**Historical Context:**\nThis issue has been a significant concern for the international community...\n\n**Current Status:**\nRecent developments include...\n\n**Key Players:**\n- Major powers\n- Regional actors\n- International organizations",
-            "poi/poo/r2r": f"**Point of Information/Order Response:**\n\nRegarding your query: {request.prompt}\n\n**Response:**\nThank you for that question. The delegate would like to clarify...\n\n**Follow-up:** This relates directly to our position on...",
-            "post assessment": f"**POST-COMMITTEE ASSESSMENT**\n\n**Performance Review:** {request.prompt}\n\n**Strengths:**\n- Effective negotiation\n- Strong research\n- Clear communication\n\n**Areas for Improvement:**\n- Timing of interventions\n- Alliance building",
-            "probable outcomes": f"**PROBABLE OUTCOMES ANALYSIS**\n\n**Scenario:** {request.prompt}\n\n**Most Likely Outcomes:**\n1. **Scenario A (60% probability):** Diplomatic resolution\n2. **Scenario B (30% probability):** Stalemate requiring mediation\n3. **Scenario C (10% probability):** Escalation requiring intervention",
-            "rebuttal": f"**REBUTTAL**\n\n**Responding to:** {request.prompt}\n\n**Counter-arguments:**\n1. The opposing delegate's position fails to consider...\n2. Recent evidence contradicts their assertion that...\n3. Our proposal addresses these concerns by...\n\n**Conclusion:** We respectfully disagree and maintain our position.",
-            "research": f"**RESEARCH BRIEF**\n\n**Topic:** {request.prompt}\n\n**Key Findings:**\n1. Historical precedents show...\n2. Current international law states...\n3. Expert opinions suggest...\n\n**Sources:**\n- UN Documents\n- Academic research\n- Policy papers",
-            "speech": f"**SPEECH DRAFT**\n\n**Honorable Chair, Distinguished Delegates,**\n\nRegarding {request.prompt}, my delegation would like to emphasize the following key points:\n\n**First,** the current situation requires immediate attention...\n\n**Second,** we propose a comprehensive approach...\n\n**In conclusion,** we urge all delegates to support this initiative.\n\nThank you.",
-            "strategy": f"**STRATEGIC PLAN**\n\n**Objective:** {request.prompt}\n\n**Phase 1: Preparation**\n- Research key positions\n- Identify potential allies\n- Prepare talking points\n\n**Phase 2: Execution**\n- Build coalitions\n- Present proposals\n- Negotiate amendments\n\n**Phase 3: Resolution**\n- Secure votes\n- Address objections\n- Finalize agreement"
-        }
-        
-        # Get response based on task type
-        ai_response = task_responses.get(request.task, f"I'll help you with {request.task}. Here's my analysis of: {request.prompt}")
-        
-        # Create response object
-        response_obj = GenerateResponse(
-            userId=request.userId,
-            task=request.task,
-            prompt=request.prompt,
-            response=ai_response
-        )
-        
-        # Store in database
-        await db.mun_responses.insert_one(response_obj.dict())
-        
-        return response_obj
-        
-    except Exception as e:
-        logger.error(f"Error generating response: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to generate response")
 
 @api_router.post("/chat/sessions", response_model=ChatSession)
 async def create_chat_session(userId: str, task: str, title: str = "New Chat"):
