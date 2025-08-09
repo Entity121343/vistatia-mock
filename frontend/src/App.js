@@ -203,6 +203,8 @@ function App() {
   const [amendmentText, setAmendmentText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
+  const [hoveredSession, setHoveredSession] = useState(null);
   const messagesEndRef = useRef(null);
 
   // Auth state observer
