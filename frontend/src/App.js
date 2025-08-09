@@ -45,90 +45,90 @@ const googleProvider = new GoogleAuthProvider();
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// MUN Tasks with icons and descriptions - updated to match backend
+// Diplomatic Tools with icons and descriptions - updated to match backend
 const MUN_TASKS = [
   { 
     id: 'research', 
     name: 'Research', 
     icon: Search, 
-    description: 'Background research on topics and positions',
+    description: 'Intelligence gathering and diplomatic research',
     color: 'bg-blue-500'
   },
   { 
     id: 'amendments', 
     name: 'Amendments', 
     icon: FileText, 
-    description: 'Draft and refine amendments to resolutions',
+    description: 'Draft and refine policy amendments',
     color: 'bg-green-500'
   },
   { 
     id: 'assessment', 
     name: 'Situation Assessment', 
     icon: AlertTriangle, 
-    description: 'Analyze current global situations',
+    description: 'Analyze global situations and conflicts',
     color: 'bg-orange-500'
   },
   { 
     id: 'directive', 
     name: 'Directive Generator', 
     icon: Gavel, 
-    description: 'Create formal directives',
+    description: 'Create strategic directives and policies',
     color: 'bg-purple-500'
   },
   { 
     id: 'draft resolution', 
     name: 'Draft Resolution', 
     icon: FileCheck, 
-    description: 'Draft comprehensive resolutions',
+    description: 'Draft comprehensive policy resolutions',
     color: 'bg-indigo-500'
   },
   { 
     id: 'background guide', 
     name: 'Background Guide', 
     icon: Book, 
-    description: 'Country-specific background guides',
+    description: 'Country-specific intelligence briefings',
     color: 'bg-cyan-500'
   },
   { 
     id: 'poi/poo', 
     name: 'POI/POO/R2R', 
     icon: MessageSquare, 
-    description: 'Points of Information, Order, and Right to Reply',
+    description: 'Diplomatic questions and responses',
     color: 'bg-pink-500'
   },
   { 
     id: 'post assessment', 
     name: 'Post Assessment', 
     icon: BarChart3, 
-    description: 'Evaluate committee performance',
+    description: 'Evaluate diplomatic performance',
     color: 'bg-emerald-500'
   },
   { 
     id: 'probable outcomes', 
     name: 'Probable Outcomes', 
     icon: Target, 
-    description: 'Predict scenario outcomes',
+    description: 'Predict scenario outcomes and risks',
     color: 'bg-amber-500'
   },
   { 
     id: 'rebuttal', 
     name: 'Rebuttal', 
     icon: ArrowRight, 
-    description: 'Counter-arguments and rebuttals',
+    description: 'Strategic counter-arguments and rebuttals',
     color: 'bg-red-500'
   },
   { 
     id: 'speech', 
     name: 'Speech', 
     icon: Mic, 
-    description: 'Formal speeches and opening statements',
+    description: 'Diplomatic speeches and statements',
     color: 'bg-teal-500'
   },
   { 
     id: 'strategy', 
     name: 'Strategy', 
     icon: Users, 
-    description: 'Negotiation and committee strategy',
+    description: 'Negotiation and diplomatic strategy',
     color: 'bg-slate-500'
   }
 ];
