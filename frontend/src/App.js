@@ -388,7 +388,7 @@ function App() {
 
         {/* Tasks List */}
         <div className="flex-1 overflow-y-auto p-4">
-          <h2 className="text-gray-300 font-medium mb-3">MUN Tasks</h2>
+          <h2 className="text-gray-300 font-medium mb-3">Diplomatic Tools</h2>
           <div className="space-y-2">
             {MUN_TASKS.map((task) => {
               const Icon = task.icon;
