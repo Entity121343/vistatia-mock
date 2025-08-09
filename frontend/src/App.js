@@ -157,8 +157,8 @@ const LoginPage = ({ onLogin }) => {
           <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <Gavel className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">MUN Assistant</h1>
-          <p className="text-gray-300">Your AI-powered Model UN companion</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Vistatia</h1>
+          <p className="text-gray-300">Your AI-powered diplomatic intelligence platform</p>
         </div>
 
         <button
